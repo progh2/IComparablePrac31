@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace IComparablePrac31
 {
-    class Product
+    class Product : IComparable
     {
         public string Name { get; set; }
-        public int Price{ get; set; }
+        public int Price { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            return this.Price.CompareTo((obj as Product).Price);
+        }
+
         public override string ToString()
         {
             return Name + " : " + Price + "원";
         }
-        internal class Program
-    {
+    }
+    internal class Program { 
         static void Main(string[] args)
         {
                 List<Product> products = new List<Product>()
