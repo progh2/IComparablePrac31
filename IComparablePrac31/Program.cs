@@ -6,14 +6,21 @@ using System.Threading.Tasks;
 
 namespace IComparablePrac31
 {
-    class Product : IComparable
+    class ParentProduct { }
+    class Product : ParentProduct, IComparable, IDisposable
     {
         public string Name { get; set; }
         public int Price { get; set; }
 
         public int CompareTo(object obj)
         {
-            return this.Price.CompareTo((obj as Product).Price);
+            //return this.Price.CompareTo((obj as Product).Price);
+            return this.Name.CompareTo((obj as Product).Name);
+        }
+
+        public void Dispose()
+        {
+            Console.WriteLine("Dispose() 메서드를 호출합니다.");
         }
 
         public override string ToString()
@@ -24,7 +31,13 @@ namespace IComparablePrac31
     internal class Program { 
         static void Main(string[] args)
         {
-                List<Product> products = new List<Product>()
+            using (Product product = new Product())
+            {
+                Console.WriteLine("Dispose 메서드 호출 전");
+            }
+            Console.WriteLine("Dispose 메서드 호출 후");
+
+            List<Product> products = new List<Product>()
                 {
                     new Product(){Name="고구마", Price=1500 },
                     new Product(){Name="사과", Price=2400 },
@@ -36,6 +49,8 @@ namespace IComparablePrac31
                 {
                     Console.WriteLine(p);
                 }
+
+                
         }
     }
 }
